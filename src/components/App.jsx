@@ -1,8 +1,6 @@
 import { Component } from 'react';
 import { Section } from './Section';
 import { nanoid } from 'nanoid';
-// * ресет после отправки формы
-// * не работает фун-я ресет
 
 export class App extends Component {
   state = {
@@ -11,6 +9,10 @@ export class App extends Component {
     name: '',
     number: '',
   };
+
+  // reset = () => {
+  //   this.setState({ name: '', number: '' });
+  // };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -24,22 +26,16 @@ export class App extends Component {
     this.setState({ [name]: value });
   };
 
-  // reset = () => {
-  //   this.setState({ name: '', number: '' });
-  // };
-
-  // getVisibleContacts = () => {
-  //   const { filter, contacts } = this.state;
-  //   const normalizedFilter = filter.toLowerCase();
-
-  //   return contacts.filter(contact =>
-  //     contact.text.toLowerCase().includes(normalizedFilter)
-  //   );
-  // };
+  getVisibleContacts = () => {
+    const { filter, contacts } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
 
   render() {
-    // const visibleContacts = this.getVisibleContacts();
-    // console.log(visibleContacts);
+    const visibleContacts = this.getVisibleContacts();
 
     return (
       <>
@@ -57,6 +53,7 @@ export class App extends Component {
                 onChange={this.handleChange}
               />
             </label>
+            <br />
             <label>
               Number
               <input
@@ -68,17 +65,17 @@ export class App extends Component {
                 onChange={this.handleChange}
               />
             </label>
-
+            <br />
             <button type="submit">Add contact</button>
           </form>
         </Section>
         <Section title="Contacts">
           <label>
-            Find contacts by name
-            <input type="text" onChange={this.handleChange} />
+            Find contacts by name <br />
+            <input type="text" name="filter" onChange={this.handleChange} />
           </label>
           <ul>
-            {this.state.contacts.map(contact => (
+            {visibleContacts.map(contact => (
               <li key={contact.id}>
                 {contact.name}: {contact.number}
               </li>
@@ -90,7 +87,34 @@ export class App extends Component {
   }
 }
 
-/*   <label>
-    Фильтр по имени
-    <input type="text" value={value} onChange={onChange} />
-  </label>; */
+/*   handleSubmit = e => {
+    e.preventDefault();
+    const { contacts, name, number } = this.state;
+
+    const isUniqueName = contacts.map(value =>
+      value.name === name ? false : true
+    );
+
+    console.log(isUniqueName);
+
+    this.setState(() =>
+      isUniqueName
+        ? {
+            contacts: [...contacts, { id: nanoid(), name, number }],
+          }
+        : contacts
+    );
+  }; */
+
+// handleSubmit = e => {
+//   e.preventDefault();
+//   const { contacts, name, number } = this.state;
+
+//   const isUniqueName = contacts.map(value => {
+//     if (value.name === name) {
+//       return alert('ты уже есть');
+//     }
+//   });
+
+//   this.setState({ contacts: [...contacts, { id: nanoid(), name, number }] });
+// };
