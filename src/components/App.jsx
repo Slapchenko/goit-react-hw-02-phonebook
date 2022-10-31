@@ -22,10 +22,9 @@ export class App extends Component {
     this.setState({ contacts: [...contacts, { id: nanoid(), name, number }] });
   };
 
-  deleteContact = id => {
-    console.log(id);
+  deleteContact = currId => {
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
+      contacts: prevState.contacts.filter(contact => contact.id !== currId),
     }));
   };
 
