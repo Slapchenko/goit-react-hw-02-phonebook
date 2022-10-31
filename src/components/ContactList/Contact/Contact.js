@@ -5,7 +5,7 @@ export const Contact = ({ name, number, onDeleteContact }) => {
   return (
     <>
       <ContactInfo>
-        {name}: {number}
+        😄 {name}: {number}
       </ContactInfo>
       <Button type="button" onClick={onDeleteContact}>
         delete
