@@ -1,24 +1,31 @@
 import { Component } from 'react';
 import { Section } from './Section';
+import { ContactForm } from './ContactForm';
+import { Filter } from './Filter';
+import { ContactList } from './ContactList';
 import { nanoid } from 'nanoid';
 
 export class App extends Component {
   state = {
     contacts: [],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  // reset = () => {
-  //   this.setState({ name: '', number: '' });
-  // };
+  addContact = ({ name, number }) => {
+    const { contacts } = this.state;
+    const savedNamesList = contacts.map(contact => contact.name);
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const { contacts, name, number } = this.state;
+    if (savedNamesList.includes(name)) {
+      return alert(`${name} is already in contacts`);
+    }
+
     this.setState({ contacts: [...contacts, { id: nanoid(), name, number }] });
-    // this.reset();
+  };
+
+  deleteContact = currId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== currId),
+    }));
   };
 
   handleChange = e => {
@@ -40,81 +47,16 @@ export class App extends Component {
     return (
       <>
         <Section title="Phonebook">
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Name
-              <input
-                type="text"
-                name="name"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-                required
-                autoComplete="off"
-                onChange={this.handleChange}
-              />
-            </label>
-            <br />
-            <label>
-              Number
-              <input
-                type="tel"
-                name="number"
-                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-                required
-                onChange={this.handleChange}
-              />
-            </label>
-            <br />
-            <button type="submit">Add contact</button>
-          </form>
+          <ContactForm onSubmit={this.addContact} />
         </Section>
         <Section title="Contacts">
-          <label>
-            Find contacts by name <br />
-            <input type="text" name="filter" onChange={this.handleChange} />
-          </label>
-          <ul>
-            {visibleContacts.map(contact => (
-              <li key={contact.id}>
-                {contact.name}: {contact.number}
-              </li>
-            ))}
-          </ul>
+          <Filter value={this.state.filter} onChange={this.handleChange} />
+          <ContactList
+            contacts={visibleContacts}
+            onDeleteContact={this.deleteContact} // wtf?
+          />
         </Section>
       </>
     );
   }
 }
-
-/*   handleSubmit = e => {
-    e.preventDefault();
-    const { contacts, name, number } = this.state;
-
-    const isUniqueName = contacts.map(value =>
-      value.name === name ? false : true
-    );
-
-    console.log(isUniqueName);
-
-    this.setState(() =>
-      isUniqueName
-        ? {
-            contacts: [...contacts, { id: nanoid(), name, number }],
-          }
-        : contacts
-    );
-  }; */
-
-// handleSubmit = e => {
-//   e.preventDefault();
-//   const { contacts, name, number } = this.state;
-
-//   const isUniqueName = contacts.map(value => {
-//     if (value.name === name) {
-//       return alert('ты уже есть');
-//     }
-//   });
-
-//   this.setState({ contacts: [...contacts, { id: nanoid(), name, number }] });
-// };
