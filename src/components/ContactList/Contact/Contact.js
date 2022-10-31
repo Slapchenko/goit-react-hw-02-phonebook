@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const ContactListItem = ({ name, number, onDeleteContact }) => {
+export const Contact = ({ name, number, onDeleteContact }) => {
   return (
     <>
       <p>
@@ -11,7 +11,7 @@ export const ContactListItem = ({ name, number, onDeleteContact }) => {
   );
 };
 
-ContactListItem.propTypes = {
+Contact.propTypes = {
   name: PropTypes.string,
   number: PropTypes.string,
   onDeleteContact: PropTypes.func.isRequired,
