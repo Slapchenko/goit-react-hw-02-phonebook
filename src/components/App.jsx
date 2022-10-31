@@ -14,12 +14,19 @@ export class App extends Component {
   addContact = ({ name, number }) => {
     const { contacts } = this.state;
     const savedNamesList = contacts.map(contact => contact.name);
-    
+
     if (savedNamesList.includes(name)) {
       return alert(`${name} is already in contacts`);
     }
 
     this.setState({ contacts: [...contacts, { id: nanoid(), name, number }] });
+  };
+
+  deleteContact = id => {
+    console.log(id);
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
   };
 
   handleChange = e => {
@@ -45,7 +52,10 @@ export class App extends Component {
         </Section>
         <Section title="Contacts">
           <Filter value={this.state.filter} onChange={this.handleChange} />
-          <ContactList contacts={visibleContacts} />
+          <ContactList
+            contacts={visibleContacts}
+            onDeleteContact={this.deleteContact} // wtf?
+          />
         </Section>
       </>
     );
