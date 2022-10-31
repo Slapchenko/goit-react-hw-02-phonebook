@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export class ContactForm extends Component {
   state = {
@@ -11,8 +12,8 @@ export class ContactForm extends Component {
     this.props.onSubmit(this.state);
     this.reset();
   };
- 
-    handleChange = e => {
+
+  handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
@@ -59,3 +60,7 @@ export class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
