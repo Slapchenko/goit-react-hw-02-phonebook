@@ -51,35 +51,3 @@ export class App extends Component {
     );
   }
 }
-
-/*   handleSubmit = e => {
-    e.preventDefault();
-    const { contacts, name, number } = this.state;
-
-    const isUniqueName = contacts.map(value =>
-      value.name === name ? false : true
-    );
-
-    console.log(isUniqueName);
-
-    this.setState(() =>
-      isUniqueName
-        ? {
-            contacts: [...contacts, { id: nanoid(), name, number }],
-          }
-        : contacts
-    );
-  }; */
-
-// handleSubmit = e => {
-//   e.preventDefault();
-//   const { contacts, name, number } = this.state;
-
-//   const isUniqueName = contacts.map(value => {
-//     if (value.name === name) {
-//       return alert('ты уже есть');
-//     }
-//   });
-
-//   this.setState({ contacts: [...contacts, { id: nanoid(), name, number }] });
-// };
