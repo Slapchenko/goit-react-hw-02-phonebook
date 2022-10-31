@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Section } from './Section';
 import { ContactForm } from './ContactForm';
+import { Filter } from './Filter';
 import { nanoid } from 'nanoid';
 
 export class App extends Component {
@@ -12,6 +13,11 @@ export class App extends Component {
   addContact = ({ name, number }) => {
     const { contacts } = this.state;
     this.setState({ contacts: [...contacts, { id: nanoid(), name, number }] });
+  };
+
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   };
 
   getVisibleContacts = () => {
@@ -31,10 +37,7 @@ export class App extends Component {
           <ContactForm onSubmit={this.addContact} />
         </Section>
         <Section title="Contacts">
-          <label>
-            Find contacts by name <br />
-            <input type="text" name="filter" onChange={this.handleChange} />
-          </label>
+          <Filter value={this.state.filter} onChange={this.handleChange} />
           <ul>
             {visibleContacts.map(contact => (
               <li key={contact.id}>
