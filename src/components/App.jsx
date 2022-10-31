@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Section } from './Section';
 import { ContactForm } from './ContactForm';
 import { Filter } from './Filter';
+import { ContactList } from './ContactList';
 import { nanoid } from 'nanoid';
 
 export class App extends Component {
@@ -38,13 +39,7 @@ export class App extends Component {
         </Section>
         <Section title="Contacts">
           <Filter value={this.state.filter} onChange={this.handleChange} />
-          <ul>
-            {visibleContacts.map(contact => (
-              <li key={contact.id}>
-                {contact.name}: {contact.number}
-              </li>
-            ))}
-          </ul>
+          <ContactList contacts={visibleContacts}/>
         </Section>
       </>
     );
